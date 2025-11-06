@@ -31,8 +31,8 @@ routes = [
   Route('/', homepage),
   Route('/user/me', user_me),
   Route('/user/{username}', user),
-  WebsocketRoute('/ws', websocket_endpoint),
-  Mount('/static', StaticFields(directory="static")),
+  WebSocketRoute('/ws', websocket_endpoint),
+  Mount('/static', StaticFiles(directory="static")),
 ]
 
 app = Starlette(debug=True, routes=routes, lifespan=lifespan)
