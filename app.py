@@ -19,3 +19,20 @@ def user(request):
 async def websocket_endpoint(websocket):
   await websocket.accept()
   await websocket.send_text('Hello, websocket!')
+  await websocket.close()
+
+@asynccontextmanager
+async def lifespan(app):
+  print('Startup')
+  yield
+  print('Shutdown')
+
+routes = [
+  Route('/', homepage),
+  Route('/user/me', user_me),
+  Route('/user/{username}', user),
+  WebsocketRoute('/ws', websocket_endpoint),
+  Mount('/static', StaticFields(directory="static"")),
+]
+
+app = Starlette(debug=True, routes=routes, lifespan=lifespan)
